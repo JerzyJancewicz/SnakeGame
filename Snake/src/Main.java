@@ -1,10 +1,15 @@
 
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-            for(int i = 0; i < 10; i ++){
-                Snake snake = new Snake(); 
+        Scanner scanner = new Scanner(System.in);
+        Snake snake = new Snake();
+            while(true) {
+                String move = scanner.nextLine();
+                snake.Move(move);
             }
         }
+
 }
