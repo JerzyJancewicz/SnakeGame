@@ -4,10 +4,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 
-public class label extends JFrame implements KeyListener {
+public class label extends JFrame implements KeyListener{
 
-    private int RandomX = (int)(Math.random()*1920);
-    private int RandomY = (int)(Math.random()*1080);
+    private int RandomX = (int)(Math.random()*1921);
+    private int RandomY = (int)(Math.random()*1081);
 
     Snake snake = new Snake();
 
@@ -27,12 +27,14 @@ public class label extends JFrame implements KeyListener {
         SnakeLabel.setOpaque(true);
 
         this.addKeyListener(this);
+
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
         switch (e.getKeyChar()) {
             case 'w' : {
+
                 SnakeLabel.setLocation(SnakeLabel.getX(), SnakeLabel.getY() - 10);
                 break;
             }
@@ -56,6 +58,7 @@ public class label extends JFrame implements KeyListener {
         switch (e.getKeyCode()) {
             case 38 : {
                 SnakeLabel.setLocation(SnakeLabel.getX(), SnakeLabel.getY() -10);
+
                 break;
             }
             case 40 : {
