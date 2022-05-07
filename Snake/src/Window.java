@@ -1,10 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-
-public class Window extends JFrame {
+public class Window extends label {
 
     Window() {
         this.setSize(1920, 1080);
@@ -13,5 +9,8 @@ public class Window extends JFrame {
         this.setLayout(null);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        this.add(RandomLabel);
+        this.add(SnakeLabel);
     }
 }
