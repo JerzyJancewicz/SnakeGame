@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
 public class label extends JFrame implements KeyListener{
 
     private int RandomX = (int)(Math.random()*1921);
@@ -22,12 +21,17 @@ public class label extends JFrame implements KeyListener{
         RandomLabel.setOpaque(true);
 
         SnakeLabel = new JLabel();
-        SnakeLabel.setBounds(512,512,snake.SnakeWidth,snake.SnakeHeight);
+        SnakeLabel.setBounds(snake.StartX,snake.StartY,snake.SnakeWidth,snake.SnakeHeight);
         SnakeLabel.setBackground(Color.BLUE);
         SnakeLabel.setOpaque(true);
 
-        this.addKeyListener(this);
+    }
 
+    public void update(){
+
+        while (true){
+
+        }
     }
 
     @Override
@@ -79,4 +83,6 @@ public class label extends JFrame implements KeyListener{
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
+
 }
