@@ -25,14 +25,10 @@ public class label extends JFrame implements KeyListener{
         SnakeLabel.setBackground(Color.BLUE);
         SnakeLabel.setOpaque(true);
 
+        // Wywolac actionListenerA
+
     }
 
-    public void update(){
-
-        while (true){
-
-        }
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {
