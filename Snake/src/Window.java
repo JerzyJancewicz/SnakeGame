@@ -12,5 +12,7 @@ public class Window extends label {
 
         this.add(RandomLabel);
         this.add(SnakeLabel);
+        repaint();
+
     }
 }

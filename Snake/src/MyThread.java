@@ -1,21 +1,17 @@
 public class MyThread extends Thread{
 
-    private int x;
+    Snake snake = new Snake();
     private boolean useAddMethod = true;
 
-    public int getX() {
-        return x;
-    }
-
     public void addToX(){
-        this.x++;
-        if(x>500)
+        this.snake.StartX++;
+        if(snake.StartX > 1080)
             useAddMethod = false;
     }
 
     public void subToX(){
-        this.x--;
-        if(x<0)
+        this.snake.StartX--;
+        if(snake.StartX < 0)
             useAddMethod = true;
     }
 
@@ -23,7 +19,7 @@ public class MyThread extends Thread{
     public void run() {
         while(true) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -31,8 +27,6 @@ public class MyThread extends Thread{
                 this.addToX();
             else
                 this.subToX();
-
-            System.out.println(this.getX());
         }
     }
 }

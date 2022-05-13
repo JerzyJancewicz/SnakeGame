@@ -12,12 +12,13 @@ public class label extends JFrame implements KeyListener{
 
     JLabel RandomLabel;
     JLabel SnakeLabel;
+    MyThread myThread;
 
     label(){
 
         RandomLabel = new JLabel();
         RandomLabel.setBounds(RandomX, RandomY,snake.SnakeWidth,snake.SnakeHeight);
-        RandomLabel.setBackground(Color.CYAN);
+        RandomLabel.setBackground(Color.BLACK);
         RandomLabel.setOpaque(true);
 
         SnakeLabel = new JLabel();
@@ -25,10 +26,12 @@ public class label extends JFrame implements KeyListener{
         SnakeLabel.setBackground(Color.BLUE);
         SnakeLabel.setOpaque(true);
 
-        // Wywolac actionListenerA
+        this.addKeyListener(this);
+
+        myThread = new MyThread();
+        this.myThread.start();
 
     }
-
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -77,8 +80,7 @@ public class label extends JFrame implements KeyListener{
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
 
 }
