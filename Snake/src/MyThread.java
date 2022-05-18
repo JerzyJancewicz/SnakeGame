@@ -1,3 +1,4 @@
+/*
 public class MyThread extends Thread{
 
     Snake snake = new Snake();
@@ -31,3 +32,4 @@ public class MyThread extends Thread{
     }
 }
 
+*/

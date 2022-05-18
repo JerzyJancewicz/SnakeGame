@@ -1,49 +1,89 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Background extends JFrame {
+public class Background extends JFrame implements KeyListener {
 
-    Background() {
+    private int SnakeWidth = 40;
+    private int SnakeHeight = 40;
+    public int StartX = 512;
+    public int StartY = 512;
+    private int RandomX = (int)(Math.random()*1921);
+    private int RandomY = (int)(Math.random()*1001);
 
-        this.setSize(1920, 1000);
-        this.setVisible(true);
-        this.setTitle("Snake");
-        this.setLayout(null);
-
-        this.setLayout(new BorderLayout());
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        JPanel panelN = new JPanel();
-        JPanel panelE = new JPanel();
-        JPanel panelS = new JPanel();
-        JPanel panelW = new JPanel();
-        JPanel panelF = new JPanel();
-
-        Color colorN = new Color(154, 113, 43);
-        Color colorE = new Color(154, 113, 43);
-        Color colorS = new Color(103, 72, 13);
-        Color colorW = new Color(103, 72, 13);
-        Color colorF = new Color(145, 141, 137);
-
-        panelN.setBackground(colorN);
-        panelE.setBackground(colorE);
-        panelS.setBackground(colorS);
-        panelW.setBackground(colorW);
-        panelF.setBackground(colorF);
-
-        panelN.setPreferredSize(new Dimension(100, 50));
-        panelE.setPreferredSize(new Dimension(50, 100));
-        panelS.setPreferredSize(new Dimension(100, 50));
-        panelW.setPreferredSize(new Dimension(50, 100));
-        panelF.setPreferredSize(new Dimension(100, 100));
-
-        panelF.setLayout(new BorderLayout());
-
-        this.add(panelN, BorderLayout.NORTH);
-        this.add(panelE, BorderLayout.EAST);
-        this.add(panelS, BorderLayout.SOUTH);
-        this.add(panelW, BorderLayout.WEST);
-        this.add(panelF, BorderLayout.CENTER);
+    public int getStartX() {
+        return StartX;
     }
+
+    public int getStartY() {
+        return StartY;
+    }
+
+    Background() {this.addKeyListener(this);}
+
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.fillRect(StartX, StartY, SnakeWidth, SnakeHeight);
+        g.setColor(Color.BLUE);
+        g.fillRect(RandomX, RandomY, SnakeWidth, SnakeHeight);
+        g.setColor(Color.black);
+        repaint();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        switch (e.getKeyChar()) {
+            case 'w' : {
+                StartY = StartY - 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX(), SnakeLabel.getY() - 10);
+                break;
+            }
+            case 's' : {
+                StartY = StartY + 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX(), SnakeLabel.getY() +10);
+                break;
+            }
+            case 'd' : {
+                StartX = StartX + 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX() + 10, SnakeLabel.getY());
+                break;
+            }
+            case 'a' : {
+                StartX = StartX - 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX() - 10, SnakeLabel.getY());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case 38 : {
+                StartY = StartY - 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX(), SnakeLabel.getY() -10);
+
+                break;
+            }
+            case 40 : {
+                StartY = StartY + 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX(), SnakeLabel.getY() +10);
+                break;
+            }
+            case 39 : {
+                StartX = StartX + 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX() + 10, SnakeLabel.getY());
+                break;
+            }
+            case 37 : {
+                StartX = StartX - 10;
+                //SnakeLabel.setLocation(SnakeLabel.getX() - 10, SnakeLabel.getY());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }
