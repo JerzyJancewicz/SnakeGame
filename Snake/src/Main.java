@@ -1,9 +1,12 @@
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
 
         Window window = new Window();
+
 /*
+
         while (true) {
             try {
                 Thread.sleep(300);
@@ -13,6 +16,7 @@ public class Main {
             window.repaint();
 
         }
-        */
+*/
+
     }
 }
