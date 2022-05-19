@@ -1,11 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Window extends Background{
+public class Window extends Snake {
 
-Window() {
+    Window() {
 
-        this.setSize(1920, 1000);
+        this.setSize(1920, 1080);
         this.setVisible(true);
         this.setTitle("Snake");
         this.setLayout(null);
@@ -45,5 +45,5 @@ Window() {
         this.add(panelS, BorderLayout.SOUTH);
         this.add(panelW, BorderLayout.WEST);
         this.add(panelF, BorderLayout.CENTER);
-        }
     }
+}

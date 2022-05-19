@@ -5,7 +5,7 @@ public class Main {
 
         Window window = new Window();
 
-/*
+       /*
         while (true) {
             try {
                 Thread.sleep(300);
@@ -15,7 +15,6 @@ public class Main {
             window.repaint();
 
         }
-*/
-
+       */
     }
 }
