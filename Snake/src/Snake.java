@@ -5,54 +5,73 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Snake extends JFrame implements ActionListener {
+public class Snake extends JFrame implements ActionListener, KeyListener {
 
     private int SnakeWidth = 40;
     private int SnakeHeight = 40;
-    private int SnakeVx = 1;
+    private int SnakeVx = 5;
     private int SnakeVy = 1;
     public int StartX = 512;
     public int StartY = 512;
     private int RandomX = (int)(50 + Math.random() * 1871);
     private int RandomY = (int)(50 + Math.random() * 1031);
+    boolean ChangeDirectionUP = false;
+    boolean ChangeDirectionDOWN = false;
+    boolean ChangeDirectionRIGHT = false;
+    boolean ChangeDirectionLEFT = false;
+    private short direction;
 
     Image head;
 
     Snake() {
         head = new ImageIcon("snake.png").getImage();
-        Timer timer = new Timer(1000, this);
+        Timer timer = new Timer(20, this);
         timer.start();
-        //this.addKeyListener(this);
+        this.addKeyListener(this);
         }
 
     public void paint(Graphics g) {
-        super.paint(g);
+        g.clearRect(0,0,getWidth(),getHeight());
         g.fillRect(StartX, StartY, SnakeWidth, SnakeHeight);
         g.setColor(Color.BLUE);
         g.fillRect(RandomX, RandomY, SnakeWidth, SnakeHeight);
         g.setColor(Color.black);
 
-        Graphics2D head2D = (Graphics2D) g;
-        head2D.drawImage(head, StartX,StartY,null);
+
+        /*Graphics2D head2D = (Graphics2D) g;
+        head2D.drawImage(head, StartX,StartY,null);*/
     }
 
-    /*@Override
+
+    @Override
     public void keyTyped(KeyEvent e) {
         switch (e.getKeyChar()) {
             case 'w' : {
-                StartY = StartY - 10;
+                ChangeDirectionUP = true;
+                ChangeDirectionDOWN = false;
+                ChangeDirectionLEFT = false;
+                ChangeDirectionRIGHT = false;
                 break;
             }
             case 's' : {
-                StartY = StartY + 10;
+                ChangeDirectionUP = false;
+                ChangeDirectionDOWN = true;
+                ChangeDirectionLEFT = false;
+                ChangeDirectionRIGHT = false;
                 break;
             }
             case 'd' : {
-                StartX = StartX + 10;
+                ChangeDirectionUP = false;
+                ChangeDirectionDOWN = false;
+                ChangeDirectionLEFT = false;
+                ChangeDirectionRIGHT = true;
                 break;
             }
             case 'a' : {
-                StartX = StartX - 10;
+                ChangeDirectionUP = false;
+                ChangeDirectionDOWN = false;
+                ChangeDirectionLEFT = true;
+                ChangeDirectionRIGHT = false;
                 break;
             }
         }
@@ -80,23 +99,23 @@ public class Snake extends JFrame implements ActionListener {
         }
     }
     @Override
-    public void keyReleased(KeyEvent e) {}*/
+    public void keyReleased(KeyEvent e) {}
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        StartX = StartX + SnakeVx;
+
+
+        if(ChangeDirectionUP == true){
+            StartX = StartX + SnakeVx;
+        } else if(ChangeDirectionDOWN = true){
+            StartX = StartX - SnakeVx;
+        }
+        if(ChangeDirectionLEFT == true){
+            StartY = StartY + SnakeVy;
+        }else {
+            StartY = StartY - SnakeVy;
+        }
+        repaint();
     }
-
-    /*void ChangeDirectionUp(){
-
-    }
-    void ChangeDirectionDown(){
-
-    }
-    void ChangeDirectionLeft(){
-
-    }
-    void ChangeDirectionRight(){
-
-    }*/
 }

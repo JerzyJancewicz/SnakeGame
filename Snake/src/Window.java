@@ -8,7 +8,7 @@ public class Window extends Snake{
         this.setSize(1920, 1080);
         this.setVisible(true);
         this.setTitle("Snake");
-//        this.setLayout(null);
+        this.setLayout(null);
 
         this.setLayout(new BorderLayout());
 
