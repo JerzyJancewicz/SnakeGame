@@ -1,14 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Window extends Snake {
+public class Window extends Snake{
 
     Window() {
 
         this.setSize(1920, 1080);
         this.setVisible(true);
         this.setTitle("Snake");
-        this.setLayout(null);
+//        this.setLayout(null);
 
         this.setLayout(new BorderLayout());
 
@@ -38,7 +38,7 @@ public class Window extends Snake {
         panelW.setPreferredSize(new Dimension(50, 100));
         panelF.setPreferredSize(new Dimension(100, 100));
 
-        panelF.setLayout(new BorderLayout());
+        //panelF.setLayout(new BorderLayout());
 
         this.add(panelN, BorderLayout.NORTH);
         this.add(panelE, BorderLayout.EAST);
