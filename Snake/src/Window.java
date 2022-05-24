@@ -3,12 +3,13 @@ import java.awt.*;
 
 public class Window extends Snake{
 
-    Window() {
 
+    Window(){
         this.setSize(1920, 1080);
+
         this.setVisible(true);
         this.setTitle("Snake");
-        this.setLayout(null);
+        //this.setLayout(null);
 
         this.setLayout(new BorderLayout());
 
@@ -26,11 +27,13 @@ public class Window extends Snake{
         Color colorW = new Color(103, 72, 13);
         Color colorF = new Color(145, 141, 137);
 
+
         panelN.setBackground(colorN);
         panelE.setBackground(colorE);
         panelS.setBackground(colorS);
         panelW.setBackground(colorW);
         panelF.setBackground(colorF);
+
 
         panelN.setPreferredSize(new Dimension(100, 50));
         panelE.setPreferredSize(new Dimension(50, 100));

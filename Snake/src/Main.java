@@ -1,11 +1,11 @@
-import java.awt.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         Window window = new Window();
+       // Snake snake = new Snake();
 
-       /*
+/*
         while (true) {
             try {
                 Thread.sleep(300);
@@ -13,8 +13,8 @@ public class Main {
                 throw new RuntimeException(e);
             }
             window.repaint();
-
         }
-       */
+*/
+
     }
 }

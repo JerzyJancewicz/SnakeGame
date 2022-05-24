@@ -19,8 +19,8 @@ public class Snake extends JFrame implements ActionListener, KeyListener {
 
     Image head;
 
-    Snake() {
-        head = new ImageIcon("snake.png").getImage();
+    Snake(){
+        head = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\snakeSmaller.png").getImage();
         Timer timer = new Timer(100, this);
         timer.start();
         this.addKeyListener(this);
@@ -28,14 +28,13 @@ public class Snake extends JFrame implements ActionListener, KeyListener {
 
     public void paint(Graphics g) {
         g.clearRect(0,0,getWidth(),getHeight());
-        g.fillRect(StartX, StartY, SnakeWidth, SnakeHeight);
-        g.setColor(Color.BLUE);
+        //g.fillRect(StartX, StartY, SnakeWidth, SnakeHeight);
+        //g.setColor(Color.BLUE);
         g.fillRect(RandomX, RandomY, SnakeWidth, SnakeHeight);
         g.setColor(Color.black);
 
-
-        /*Graphics2D head2D = (Graphics2D) g;
-        head2D.drawImage(head, StartX,StartY,null);*/
+        Graphics2D head2D = (Graphics2D) g;
+        head2D.drawImage(head, StartX,StartY,null);
     }
 
 
