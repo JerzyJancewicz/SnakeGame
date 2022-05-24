@@ -9,23 +9,19 @@ public class Snake extends JFrame implements ActionListener, KeyListener {
 
     private int SnakeWidth = 40;
     private int SnakeHeight = 40;
-    private int SnakeVx = 5;
-    private int SnakeVy = 1;
+    private int SnakeVx = 40;
+    private int SnakeVy = 40;
     public int StartX = 512;
     public int StartY = 512;
     private int RandomX = (int)(50 + Math.random() * 1871);
     private int RandomY = (int)(50 + Math.random() * 1031);
-    boolean ChangeDirectionUP = false;
-    boolean ChangeDirectionDOWN = false;
-    boolean ChangeDirectionRIGHT = false;
-    boolean ChangeDirectionLEFT = false;
     private short direction;
 
     Image head;
 
     Snake() {
         head = new ImageIcon("snake.png").getImage();
-        Timer timer = new Timer(20, this);
+        Timer timer = new Timer(100, this);
         timer.start();
         this.addKeyListener(this);
         }
@@ -47,31 +43,19 @@ public class Snake extends JFrame implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {
         switch (e.getKeyChar()) {
             case 'w' : {
-                ChangeDirectionUP = true;
-                ChangeDirectionDOWN = false;
-                ChangeDirectionLEFT = false;
-                ChangeDirectionRIGHT = false;
+                direction = 0;
                 break;
             }
             case 's' : {
-                ChangeDirectionUP = false;
-                ChangeDirectionDOWN = true;
-                ChangeDirectionLEFT = false;
-                ChangeDirectionRIGHT = false;
+                direction = 1;
                 break;
             }
             case 'd' : {
-                ChangeDirectionUP = false;
-                ChangeDirectionDOWN = false;
-                ChangeDirectionLEFT = false;
-                ChangeDirectionRIGHT = true;
+                direction = 2;
                 break;
             }
             case 'a' : {
-                ChangeDirectionUP = false;
-                ChangeDirectionDOWN = false;
-                ChangeDirectionLEFT = true;
-                ChangeDirectionRIGHT = false;
+                direction = 3;
                 break;
             }
         }
@@ -81,19 +65,19 @@ public class Snake extends JFrame implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case 38 : {
-                StartY = StartY - 10;
+                direction = 0;
                 break;
             }
             case 40 : {
-                StartY = StartY + 10;
+                direction = 1;
                 break;
             }
             case 39 : {
-                StartX = StartX + 10;
+                direction = 2;
                 break;
             }
             case 37 : {
-                StartX = StartX - 10;
+                direction = 3;
                 break;
             }
         }
@@ -105,16 +89,19 @@ public class Snake extends JFrame implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-
-        if(ChangeDirectionUP == true){
-            StartX = StartX + SnakeVx;
-        } else if(ChangeDirectionDOWN = true){
-            StartX = StartX - SnakeVx;
-        }
-        if(ChangeDirectionLEFT == true){
-            StartY = StartY + SnakeVy;
-        }else {
-            StartY = StartY - SnakeVy;
+        switch (direction){
+            case 0 :if(direction != 1) {
+                StartY = StartY - SnakeVy;
+            }else break;
+            case 1 :if(direction != 0) {
+                StartY = StartY + SnakeVy;
+            }else break;
+            case 2 :if(direction != 3) {
+                StartX = StartX + SnakeVx;
+            }else break;
+            case 3 :if(direction != 2) {
+                StartX = StartX - SnakeVx;
+            }else break;
         }
         repaint();
     }
