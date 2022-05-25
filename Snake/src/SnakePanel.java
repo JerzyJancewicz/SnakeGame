@@ -12,22 +12,27 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     Image SnakeUp;
     Image SnakeDown;
     Image Apple;
+    Image Body;
 
     Snake snake = new Snake();
 
     public int PanelWidth = 1920;
     public int PanelHeight = 1080;
+    private int counter = 1;
+    private int BodyPositionMinus = snake.getStartY() - counter*40;
+    private int BodyPositionPlus = snake.getStartY() + counter*40;
 
     SnakePanel() {
-        SnakeRight = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\snakeRight.png").getImage();
-        SnakeLeft = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\snakeLeft.png").getImage();
-        SnakeUp = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\snakeUp.png").getImage();
-        SnakeDown = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\snakeDown.png").getImage();
-        Apple = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\jablko.png").getImage();
+        SnakeRight = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_right.png").getImage();
+        SnakeLeft = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_left.png").getImage();
+        SnakeUp = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_up.png").getImage();
+        SnakeDown = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_down.png").getImage();
+        Apple = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\apple.png").getImage();
+        Body = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\body_horizontal.png").getImage();
 
         this.setPreferredSize(new Dimension(PanelWidth,PanelHeight));
         this.setVisible(true);
-        Timer timer = new Timer(100, this);
+        Timer timer = new Timer(80, this);
         timer.start();
     }
 
@@ -38,23 +43,46 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
         paintApple(g);
         paintSnake(g);
-
+        TakeApple(g);
     }
 
     public void paintSnake(Graphics g){
         g.fillRect(snake.getStartX(), snake.getStartY(), snake.getSnakeWidth(), snake.getSnakeHeight());
+        boolean isAppleTaken = snake.getRandomX() == snake.getStartX() && snake.getRandomY() == snake.getStartY();
+
         switch (snake.getDirection()){
             case 0:
                 g.drawImage(SnakeUp, snake.getStartX(), snake.getStartY(), null);
+
+                    if(isAppleTaken){
+                        //g.drawImage(Body,snake.getStartX(),BodyPositionMinus,null);
+                        counter++;
+                        System.out.println(counter);
+                    }
                 break;
             case 1:
                 g.drawImage(SnakeDown, snake.getStartX(), snake.getStartY(), null);
+
+                    if(isAppleTaken){
+                        //g.drawImage(Body,snake.getStartX(),BodyPositionPlus,null);
+                        counter++;
+                    }
                 break;
             case 2:
                 g.drawImage(SnakeRight, snake.getStartX(), snake.getStartY(), null);
+
+                    if(isAppleTaken){
+                        //g.drawImage(Body,snake.getStartX(),BodyPositionMinus,null);
+                        counter++;
+                    }
                 break;
             case 3:
                 g.drawImage(SnakeLeft, snake.getStartX(), snake.getStartY(), null);
+
+                    if(isAppleTaken){
+                        //g.drawImage(Body,snake.getStartX(),BodyPositionPlus,null);
+                        counter++;
+                    }
                 break;
         }
     }
@@ -100,10 +128,10 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
                     g.setColor(getColor("brazowyJ"));
                 }
             }
-        g.fillRect(40,0,40,40);
-        g.setColor(getColor("brazowyJ"));
-        g.fillRect(0,0,40,40);
-        g.setColor(getColor("brazowyC"));
+            g.fillRect(40,0,40,40);
+            g.setColor(getColor("brazowyJ"));
+            g.fillRect(0,0,40,40);
+            g.setColor(getColor("brazowyC"));
         }
 
     public Color getColor(String color){
@@ -115,13 +143,18 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             case "brazowyC" :
                 color1 = new Color(122, 89, 33);
                 break;
-            case "czerwony" :
-                color1 = new Color(154, 6, 6);
-                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + color);
         }
         return color1;
+    }
+
+    public void TakeApple(Graphics g){
+        if(snake.getRandomX() == snake.getStartX() && snake.getRandomY() == snake.getStartY()){
+            snake.setRandomX((int)(Math.random() * 1920));
+            snake.setRandomY((int)(Math.random() * 1920));
+
+        }
     }
 
     @Override
@@ -185,15 +218,19 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         switch (snake.getDirection()){
             case 0 :if(snake.getDirection() != 1) {
                 snake.setStartY(snake.getStartY() - snake.getSnakeVy());
+                //BodyPositionMinus = BodyPositionMinus - snake.getSnakeVy();
             }else break;
             case 1 :if(snake.getDirection() != 0) {
                 snake.setStartY(snake.getStartY() + snake.getSnakeVy());
+                //BodyPositionPlus = BodyPositionPlus + snake.getSnakeVy();
             }else break;
             case 2 :if(snake.getDirection() != 3) {
                 snake.setStartX(snake.getStartX() + snake.getSnakeVx());
+                //BodyPositionMinus = BodyPositionMinus + snake.getSnakeVx();
             }else break;
             case 3 :if(snake.getDirection() != 2) {
                 snake.setStartX(snake.getStartX() - snake.getSnakeVx());
+                //BodyPositionPlus = BodyPositionPlus - snake.getSnakeVx();
             }else break;
         }
         repaint();

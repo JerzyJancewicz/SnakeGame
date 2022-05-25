@@ -8,12 +8,35 @@ public class Snake extends JFrame {
     private int SnakeVy = 40;
     private int StartX = 480;
     private int StartY = 480;
-    private int RandomX = (int) (50 + Math.random() * 1871);
-    private int RandomY  = (int) (50 + Math.random() * 1031);
+    private int RandomX = 45;
+    private int RandomY = 45;
     private int Direction;
 
-    public void setStartX(int startX) {
-        StartX = startX;
+    public int getRandomX() {
+        if(RandomX % 40 == 0){
+            return RandomX;
+        }else {
+            while (RandomX % 40 != 0){
+                RandomX = (int) (Math.random() * 1840);
+            }
+            return RandomX;
+        }
+    }
+    public int getRandomY() {
+        if(RandomY % 40 == 0){
+            return RandomY;
+        }else {
+            while (RandomY % 40 != 0){
+                RandomY = (int) (Math.random() * 1040);
+            }
+            return RandomY;
+        }
+    }
+    public void setRandomX(int randomX) {
+        RandomX = randomX;
+    }
+    public void setRandomY(int randomY) {
+        RandomY = randomY;
     }
 
     public int getSnakeWidth() {
@@ -40,26 +63,21 @@ public class Snake extends JFrame {
         return StartY;
     }
 
-    public void setStartY(int startY) {
-        StartY = startY;
-    }
-
-    public int getRandomX() {
-        return RandomX;
-    }
-
-    public int getRandomY() {
-        return RandomY;
-    }
-
     public int getDirection() {
         return Direction;
+    }
+
+    public void setStartY(int startY) {
+        StartY = startY;
     }
 
     public void setDirection(int direction) {
         Direction = direction;
     }
 
+    public void setStartX(int startX) {
+        StartX = startX;
+    }
 
 }
 
