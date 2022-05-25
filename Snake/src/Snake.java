@@ -1,16 +1,15 @@
 import javax.swing.*;
 
-
-public class Snake extends JFrame{
+public class Snake extends JFrame {
 
     private int SnakeWidth = 40;
     private int SnakeHeight = 40;
     private int SnakeVx = 40;
     private int SnakeVy = 40;
-    private int StartX = 512;
-    private int StartY = 512;
-    private int RandomX = (int)(50 + Math.random() * 1871);
-    private int RandomY = (int)(50 + Math.random() * 1031);
+    private int StartX = 480;
+    private int StartY = 480;
+    private int RandomX = (int) (50 + Math.random() * 1871);
+    private int RandomY  = (int) (50 + Math.random() * 1031);
     private int Direction;
 
     public void setStartX(int startX) {
@@ -60,4 +59,8 @@ public class Snake extends JFrame{
     public void setDirection(int direction) {
         Direction = direction;
     }
+
+
 }
+
+
