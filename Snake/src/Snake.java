@@ -17,7 +17,7 @@ public class Snake extends JFrame {
             return RandomX;
         }else {
             while (RandomX % 40 != 0){
-                RandomX = (int) (Math.random() * 1840);
+                RandomX = (int) (Math.random() * 1880);
             }
             return RandomX;
         }
@@ -27,7 +27,7 @@ public class Snake extends JFrame {
             return RandomY;
         }else {
             while (RandomY % 40 != 0){
-                RandomY = (int) (Math.random() * 1040);
+                RandomY = (int) (Math.random() * 1000);
             }
             return RandomY;
         }
