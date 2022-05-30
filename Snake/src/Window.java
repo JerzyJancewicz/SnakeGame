@@ -10,7 +10,9 @@ public class Window extends Snake{
         this.setTitle("Snake");
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         this.add(snakePanel);
+
         this.addKeyListener(snakePanel);
 
 

@@ -23,15 +23,16 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
     private int countBody = 1;
     private int BodyPositionMinus = snake.getStartY() - (countApple * 40);
     private int BodyPositionPlus = snake.getStartY() + (countApple * 40);
+    private boolean isPlaying = true;
 
     SnakePanel() {
-        SnakeRight = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_right.png").getImage();
-        SnakeLeft = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_left.png").getImage();
-        SnakeUp = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_up.png").getImage();
-        SnakeDown = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_down.png").getImage();
-        Apple = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\apple.png").getImage();
-        BodyX = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\body_horizontal.png").getImage();
-        BodyY = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\body_vertical.png").getImage();
+        SnakeRight = new ImageIcon("Snake/src/head_right.png").getImage();
+        SnakeLeft = new ImageIcon("Snake/src/head_left.png").getImage();
+        SnakeUp = new ImageIcon("Snake/src/head_up.png").getImage();
+        SnakeDown = new ImageIcon("Snake/src/head_down.png").getImage();
+        Apple = new ImageIcon("Snake/src/apple.png").getImage();
+        BodyX = new ImageIcon("Snake/src/body_horizontal.png").getImage();
+        BodyY = new ImageIcon("Snake/src/body_vertical.png").getImage();
 
         this.setPreferredSize(new Dimension(PanelWidth, PanelHeight));
         this.setVisible(true);
@@ -66,7 +67,6 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
                 }
 
                 for(int i = 0; i < countBody; i++){
-
                     g.drawImage(BodyY,snake.getStartX(),snake.getStartY() + ((countBody - i) * snake.getSnakeVy()),null);
                 }
                 break;
@@ -162,10 +162,10 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
         Color color1;
         switch (color) {
             case "brazowyJ":
-                color1 = new Color(169, 122, 73);
+                color1 = new Color(158, 140, 122);
                 break;
             case "brazowyC":
-                color1 = new Color(122, 89, 33);
+                color1 = new Color(211, 209, 204);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + color);
@@ -182,7 +182,6 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
     }
 
     public boolean isPlaying (){
-        boolean isPlaying = true;
 
             if(snake.getStartX() > PanelWidth){
                 isPlaying = false;
@@ -204,25 +203,32 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
     public void keyTyped(KeyEvent e) {
         switch (e.getKeyChar()) {
             case 'w': {
-                snake.setDirection(0);
+                if(snake.getDirection() != 1){
+                    snake.setDirection(0);
+                }
                 //System.out.println(snake.getDirection());
                 //System.out.println("w");
                 break;
             }
             case 's': {
-                snake.setDirection(1);
+                if(snake.getDirection() != 0) {
+                    snake.setDirection(1);
+                }
                 //System.out.println(snake.getDirection());
                 //System.out.println("s");
                 break;
             }
             case 'd': {
+                if(snake.getDirection() != 3)
                 snake.setDirection(2);
                 //System.out.println(snake.getDirection());
                 //System.out.println("d");
                 break;
             }
             case 'a': {
-                snake.setDirection(3);
+                if(snake.getDirection() != 2) {
+                    snake.setDirection(3);
+                }
                 //System.out.println(snake.getDirection());
                 //System.out.println("a");
                 break;
@@ -277,6 +283,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
                     snake.setStartX(snake.getStartX() - snake.getSnakeVx());
                     break;
             }
+            isPlaying();
             repaint();
     }
 }
