@@ -19,9 +19,10 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
 
     public int PanelWidth = 1920;
     public int PanelHeight = 1080;
-    private int counter = 1;
-    private int BodyPositionMinus = snake.getStartY() - (counter * 40);
-    private int BodyPositionPlus = snake.getStartY() + (counter * 40);
+    private int countApple = 1;
+    private int countBody = 1;
+    private int BodyPositionMinus = snake.getStartY() - (countApple * 40);
+    private int BodyPositionPlus = snake.getStartY() + (countApple * 40);
 
     SnakePanel() {
         SnakeRight = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_right.png").getImage();
@@ -29,13 +30,17 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
         SnakeUp = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_up.png").getImage();
         SnakeDown = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\head_down.png").getImage();
         Apple = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\apple.png").getImage();
-        BodyX = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\body_horizon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             tal.png").getImage();
+        BodyX = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\body_horizontal.png").getImage();
         BodyY = new ImageIcon("J:\\SnakeGame\\SnakeGame\\Snake\\src\\body_vertical.png").getImage();
 
         this.setPreferredSize(new Dimension(PanelWidth, PanelHeight));
         this.setVisible(true);
         Timer timer = new Timer(80, this);
         timer.start();
+
+        if (!isPlaying()){
+            timer.stop();
+        }
     }
 
     public void paint(Graphics g) {
@@ -46,51 +51,68 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
         paintApple(g);
         paintSnake(g);
         TakeApple(g);
+
     }
 
     public void paintSnake(Graphics g) {
-        g.fillRect(snake.getStartX(), snake.getStartY(), snake.getSnakeWidth(), snake.getSnakeHeight());
-        boolean isAppleTaken = snake.getRandomX() == snake.getStartX() && snake.getRandomY() == snake.getStartY();
 
         switch (snake.getDirection()) {
             case 0:
                 g.drawImage(SnakeUp, snake.getStartX(), snake.getStartY(), null);
 
-                if (isAppleTaken) {
-                    g.drawImage(BodyY, snake.getStartX(), BodyPositionMinus, null);
-                    counter++;
-                    System.out.println(counter);
+                if(snake.getRandomX() == snake.getStartX() && snake.getRandomY() == snake.getStartY()){
+                    countBody++;
+                    countApple++;
+                }
+
+                for(int i = 0; i < countBody; i++){
+
+                    g.drawImage(BodyY,snake.getStartX(),snake.getStartY() + ((countBody - i) * snake.getSnakeVy()),null);
                 }
                 break;
+
             case 1:
                 g.drawImage(SnakeDown, snake.getStartX(), snake.getStartY(), null);
 
-                if (isAppleTaken) {
-                    g.drawImage(BodyY,snake.getStartX(),BodyPositionPlus,null);
-                    counter++;
+                if(snake.getRandomX() == snake.getStartX() && snake.getRandomY() == snake.getStartY()){
+                    countBody++;
+                    countApple++;
+                }
+
+                for(int i = 0; i < countBody; i++){
+                    g.drawImage(BodyY,snake.getStartX(),snake.getStartY() - ((countBody - i) * snake.getSnakeVy()),null);
                 }
                 break;
+
             case 2:
                 g.drawImage(SnakeRight, snake.getStartX(), snake.getStartY(), null);
 
-                if (isAppleTaken) {
-                    g.drawImage(BodyX,snake.getStartX(),BodyPositionMinus,null);
-                    counter++;
+                if(snake.getRandomX() == snake.getStartX() && snake.getRandomY() == snake.getStartY()){
+                    countBody++;
+                    countApple++;
+                }
+
+                for(int i = 0; i < countBody; i++) {
+                    g.drawImage(BodyX, snake.getStartX() - ((countBody - i) * snake.getSnakeVx()), snake.getStartY(), null);
                 }
                 break;
+
             case 3:
                 g.drawImage(SnakeLeft, snake.getStartX(), snake.getStartY(), null);
 
-                if (isAppleTaken) {
-                    g.drawImage(BodyX,snake.getStartX(),BodyPositionPlus,null);
-                    counter++;
+                if(snake.getRandomX() == snake.getStartX() && snake.getRandomY() == snake.getStartY()){
+                    countBody++;
+                    countApple++;
+                }
+
+                for(int i = 0; i < countBody; i++){
+                    g.drawImage(BodyX,snake.getStartX() + ((countBody - i) * snake.getSnakeVx()),snake.getStartY(),null);
                 }
                 break;
         }
     }
 
     public void paintApple(Graphics g) {
-        g.fillRect(snake.getRandomX(), snake.getRandomY(), snake.getSnakeWidth(), snake.getSnakeHeight());
         g.drawImage(Apple, snake.getRandomX(), snake.getRandomY(), null);
     }
 
@@ -159,31 +181,50 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
         }
     }
 
+    public boolean isPlaying (){
+        boolean isPlaying = true;
+
+            if(snake.getStartX() > PanelWidth){
+                isPlaying = false;
+            }
+            if(snake.getStartX() < 0){
+                isPlaying = false;
+            }
+            if(snake.getStartY() > PanelHeight){
+                isPlaying = false;
+            }
+            if(snake.getStartY() < 0){
+                isPlaying = false;
+            }
+
+        return isPlaying;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         switch (e.getKeyChar()) {
             case 'w': {
                 snake.setDirection(0);
-                System.out.println(snake.getDirection());
-                System.out.println("w");
+                //System.out.println(snake.getDirection());
+                //System.out.println("w");
                 break;
             }
             case 's': {
                 snake.setDirection(1);
-                System.out.println(snake.getDirection());
-                System.out.println("s");
+                //System.out.println(snake.getDirection());
+                //System.out.println("s");
                 break;
             }
             case 'd': {
                 snake.setDirection(2);
-                System.out.println(snake.getDirection());
-                System.out.println("d");
+                //System.out.println(snake.getDirection());
+                //System.out.println("d");
                 break;
             }
             case 'a': {
                 snake.setDirection(3);
-                System.out.println(snake.getDirection());
-                System.out.println("a");
+                //System.out.println(snake.getDirection());
+                //System.out.println("a");
                 break;
             }
         }
@@ -219,67 +260,23 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-     /*   if (snake.getDirection() == 0) {
             switch (snake.getDirection()) {
                 case 0:
                     snake.setStartY(snake.getStartY() - snake.getSnakeVy());
-                case 2:
-                    snake.setStartX(snake.getStartX() + snake.getSnakeVx());
-                case 3:
-                    snake.setStartX(snake.getStartX() - snake.getSnakeVx());
-            }
-        } else if (snake.getDirection() == 1) {
-            switch (snake.getDirection()) {
+                    break;
+
                 case 1:
                     snake.setStartY(snake.getStartY() + snake.getSnakeVy());
+                    break;
+
                 case 2:
                     snake.setStartX(snake.getStartX() + snake.getSnakeVx());
+                    break;
+
                 case 3:
                     snake.setStartX(snake.getStartX() - snake.getSnakeVx());
+                    break;
             }
-        } else if (snake.getDirection() == 2) {
-            switch (snake.getDirection()) {
-                case 0:
-                    snake.setStartY(snake.getStartY() - snake.getSnakeVy());
-                case 2:
-                    snake.setStartX(snake.getStartX() + snake.getSnakeVx());
-                case 1:
-                    snake.setStartX(snake.getStartX() - snake.getSnakeVx());
-            }
-        } else {
-            switch (snake.getDirection()) {
-                case 0:
-                    snake.setStartY(snake.getStartY() - snake.getSnakeVy());
-                case 3:
-                    snake.setStartX(snake.getStartX() - snake.getSnakeVx());
-                case 1:
-                    snake.setStartX(snake.getStartX() - snake.getSnakeVx());
-            }
-
-        }
-        repaint();
-    }
-}*/
-
-
-        switch (snake.getDirection()){
-            case 0 :if(snake.getDirection() != 1) {
-                snake.setStartY(snake.getStartY() - snake.getSnakeVy());
-                BodyPositionMinus = BodyPositionMinus - snake.getSnakeVy();
-            }else break;
-            case 1 :if(snake.getDirection() != 0) {
-                snake.setStartY(snake.getStartY() + snake.getSnakeVy());
-                BodyPositionPlus = BodyPositionPlus + snake.getSnakeVy();
-            }else break;
-            case 2 :if(snake.getDirection() != 3) {
-                snake.setStartX(snake.getStartX() + snake.getSnakeVx());
-                BodyPositionMinus = BodyPositionMinus + snake.getSnakeVx();
-            }else break;
-            case 3 :if(snake.getDirection() != 2) {
-                snake.setStartX(snake.getStartX() - snake.getSnakeVx());
-                BodyPositionPlus = BodyPositionPlus - snake.getSnakeVx();
-            }else break;
-        }
-        repaint();
+            repaint();
     }
 }
