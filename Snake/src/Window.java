@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class Window extends Snake{
+public class Window extends JFrame{
 
     SnakePanel snakePanel = new SnakePanel();
 
@@ -12,9 +12,7 @@ public class Window extends Snake{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.add(snakePanel);
-
         this.addKeyListener(snakePanel);
-
 
     }
 }

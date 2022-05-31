@@ -1,51 +1,13 @@
-import javax.swing.*;
 
-public class Snake extends JFrame {
+public class Snake {
 
-    private int SnakeWidth = 40;
-    private int SnakeHeight = 40;
-    private int SnakeVx = 40;
-    private int SnakeVy = 40;
+    /*private int SnakeWidth = 40;
+    private int SnakeHeight = 40;*/
+    private final int SnakeVx = 40;
+    private final int SnakeVy = 40;
     private int StartX = 480;
     private int StartY = 480;
-    private int RandomX = 45;
-    private int RandomY = 45;
     private int Direction;
-
-    public int getRandomX() {
-        if(RandomX % 40 == 0){
-            return RandomX;
-        }else {
-            while (RandomX % 40 != 0){
-                RandomX = (int) (Math.random() * 1880);
-            }
-            return RandomX;
-        }
-    }
-    public int getRandomY() {
-        if(RandomY % 40 == 0){
-            return RandomY;
-        }else {
-            while (RandomY % 40 != 0){
-                RandomY = (int) (Math.random() * 1000);
-            }
-            return RandomY;
-        }
-    }
-    public void setRandomX(int randomX) {
-        RandomX = randomX;
-    }
-    public void setRandomY(int randomY) {
-        RandomY = randomY;
-    }
-
-    public int getSnakeWidth() {
-        return SnakeWidth;
-    }
-
-    public int getSnakeHeight() {
-        return SnakeHeight;
-    }
 
     public int getSnakeVx() {
         return SnakeVx;
