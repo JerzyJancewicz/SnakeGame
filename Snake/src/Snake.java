@@ -40,7 +40,6 @@ public class Snake {
     public void setStartX(int startX) {
         StartX = startX;
     }
-
 }
 
 
