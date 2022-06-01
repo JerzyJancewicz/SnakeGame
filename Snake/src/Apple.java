@@ -1,35 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
+
 
 public class Apple extends JPanel {
 
-    Snake snake = new Snake();
     Image Apple;
-    //RandomNumber Random = new RandomNumber();
-    Random randomX = new Random();
-    Random randomY = new Random();
 
-    private int RandomX;
-    private int RandomY;
+
+    private int RandomX = (int) (Math.random() * 1880);
+    private int RandomY = (int) (Math.random() * 1000);
 
     Apple(){
         Apple = new ImageIcon("Snake/src/Photos/apple.png").getImage();
     }
 
     public void paintApple(Graphics g) {
-        g.drawImage(Apple, RandomX, RandomY, null);
+        g.drawImage(Apple, getRandomX(), getRandomY(), null);
 
     }
 
-    public boolean isAppleTaken() {
-            if (RandomX == snake.getStartX() && RandomY == snake.getStartY()) {
-                   return true;
-            }
-            return false;
-    }
-
-    /*public int getRandomX() {
+    public int getRandomX() {
         if (RandomX % 40 != 0) {
             while (RandomX % 40 != 0) {
                 RandomX = (int) (Math.random() * 1880);
@@ -44,7 +34,16 @@ public class Apple extends JPanel {
             }
         }
         return RandomY;
-    }*/
+    }
+
+    public void setRandomX(int randomX) {
+        RandomX = randomX;
+    }
+
+    public void setRandomY(int randomY) {
+        RandomY = randomY;
+    }
+
 }
 
 /*while (randomX.nextInt(1880) % 40 != 0){

@@ -7,38 +7,38 @@ import java.awt.event.KeyListener;
 
 public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
-    Image SnakeRight;
+    /*Image SnakeRight;
     Image SnakeLeft;
     Image SnakeUp;
     Image SnakeDown;
     Image BodyX;
-    Image BodyY;
+    Image BodyY;*/
 
     Snake snake = new Snake();
-    Background Background = new Background();
-    Apple Apple = new Apple();
+    Background background = new Background();
+    Apple apple = new Apple();
+    PaintSnake paintSnake = new PaintSnake();
 
 
     public int PanelWidth = 1920;
     public int PanelHeight = 1080;
-    private int countApple = 1;
-    private int countBody = 1;
     //private int BodyPositionMinus = snake.getStartY() - (countApple * 40);
     //private int BodyPositionPlus = snake.getStartY() + (countApple * 40);
-    private boolean isPlaying = true;
+    private boolean play = true;
+
+    Timer timer = new Timer(80, this);
 
     SnakePanel() {
-        SnakeRight = new ImageIcon("Snake/src/Photos/head_right.png").getImage();
+        /*SnakeRight = new ImageIcon("Snake/src/Photos/head_right.png").getImage();
         SnakeLeft = new ImageIcon("Snake/src/Photos/head_left.png").getImage();
         SnakeUp = new ImageIcon("Snake/src/Photos/head_up.png").getImage();
         SnakeDown = new ImageIcon("Snake/src/Photos/head_down.png").getImage();
         BodyX = new ImageIcon("Snake/src/Photos/body_horizontal.png").getImage();
-        BodyY = new ImageIcon("Snake/src/Photos/body_vertical.png").getImage();
+        BodyY = new ImageIcon("Snake/src/Photos/body_vertical.png").getImage();*/
 
         this.setPreferredSize(new Dimension(PanelWidth, PanelHeight));
         this.setVisible(true);
 
-        Timer timer = new Timer(80, this);
         timer.start();
 
     }
@@ -46,23 +46,21 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     public void paint(Graphics g) {
         g.clearRect(0, 0, getWidth(), getHeight());
 
-        Background.paintBackGround(g);
-        paintSnake(g);
-        Apple.paintApple(g);
+        background.paintBackGround(g);
+        paintSnake.paintSnake(g);
+        apple.paintApple(g);
 
     }
 
-    public void paintSnake(Graphics g) {
+    /*public void paint(Graphics g) {
 
         switch (snake.getDirection()) {
             case 0:
                 g.drawImage(SnakeUp, snake.getStartX(), snake.getStartY(), null);
 
-                /*if (randomNumber.getRandomX() == snake.getStartX() && randomNumber.getRandomY() == snake.getStartY()) {
-                    countBody++;
-                    countApple++;
-                }*/
-                if(Apple.isAppleTaken()){
+                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
+                    apple.setRandomX((int) (Math.random() * 1880));
+                    apple.setRandomY((int) (Math.random() * 1000));
                     countBody++;
                     countApple++;
                 }
@@ -75,15 +73,12 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             case 1:
                 g.drawImage(SnakeDown, snake.getStartX(), snake.getStartY(), null);
 
-                if(Apple.isAppleTaken()){
+                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
+                    apple.setRandomX((int) (Math.random() * 1880));
+                    apple.setRandomY((int) (Math.random() * 1000));
                     countBody++;
                     countApple++;
                 }
-
-                /*if (randomNumber.getRandomX() == snake.getStartX() && randomNumber.getRandomY() == snake.getStartY()) {
-                    countBody++;
-                    countApple++;
-                }*/
 
                 for (int i = 0; i < countBody; i++) {
                     g.drawImage(BodyY, snake.getStartX(), snake.getStartY() - ((countBody - i) * snake.getSnakeVy()), null);
@@ -93,15 +88,12 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             case 2:
                 g.drawImage(SnakeRight, snake.getStartX(), snake.getStartY(), null);
 
-                if(Apple.isAppleTaken()){
+                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
+                    apple.setRandomX((int) (Math.random() * 1880));
+                    apple.setRandomY((int) (Math.random() * 1000));
                     countBody++;
                     countApple++;
                 }
-
-                /*if (randomNumber.getRandomX() == snake.getStartX() && randomNumber.getRandomY() == snake.getStartY()) {
-                    countBody++;
-                    countApple++;
-                }*/
 
                 for (int i = 0; i < countBody; i++) {
                     g.drawImage(BodyX, snake.getStartX() - ((countBody - i) * snake.getSnakeVx()), snake.getStartY(), null);
@@ -111,39 +103,36 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             case 3:
                 g.drawImage(SnakeLeft, snake.getStartX(), snake.getStartY(), null);
 
-                if(Apple.isAppleTaken()){
+                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
+                    apple.setRandomX((int) (Math.random() * 1880));
+                    apple.setRandomY((int) (Math.random() * 1000));
                     countBody++;
                     countApple++;
                 }
-
-                /*if (randomNumber.getRandomX() == snake.getStartX() && randomNumber.getRandomY() == snake.getStartY()) {
-                    countBody++;
-                    countApple++;
-                }*/
 
                 for (int i = 0; i < countBody; i++) {
                     g.drawImage(BodyX, snake.getStartX() + ((countBody - i) * snake.getSnakeVx()), snake.getStartY(), null);
                 }
                 break;
         }
-    }
+    }*/
 
     public boolean isPlaying() {
 
-        if (snake.getStartX() > PanelWidth) {
-            isPlaying = false;
+        if (snake.getStartX() >= PanelWidth) {
+            play = false;
         }
-        if (snake.getStartX() < 0) {
-            isPlaying = false;
+        if (snake.getStartX() <= 0) {
+            play = false;
         }
-        if (snake.getStartY() > PanelHeight) {
-            isPlaying = false;
+        if (snake.getStartY() >= PanelHeight) {
+            play = false;
         }
-        if (snake.getStartY() < 0) {
-            isPlaying = false;
+        if (snake.getStartY() <= 0) {
+            play = false;
         }
 
-        return isPlaying;
+        return play;
     }
 
     @Override
@@ -215,26 +204,29 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
             switch (snake.getDirection()) {
                 case 0:
-                    Apple.isAppleTaken();
+                    snake.setDirection(0);
                     snake.setStartY(snake.getStartY() - snake.getSnakeVy());
                     break;
 
                 case 1:
-                    Apple.isAppleTaken();
+                    snake.setDirection(1);
                     snake.setStartY(snake.getStartY() + snake.getSnakeVy());
                     break;
 
                 case 2:
-                    Apple.isAppleTaken();
+                    snake.setDirection(2);
                     snake.setStartX(snake.getStartX() + snake.getSnakeVx());
                     break;
 
                 case 3:
-                    Apple.isAppleTaken();
+                    snake.setDirection(3);
                     snake.setStartX(snake.getStartX() - snake.getSnakeVx());
                     break;
             }
-            isPlaying();
-            repaint();
+                isPlaying();
+            if(!play){
+                timer.stop();
+            }
+        repaint();
     }
 }
