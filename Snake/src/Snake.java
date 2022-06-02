@@ -1,8 +1,6 @@
 
 public class Snake {
 
-    /*private int SnakeWidth = 40;
-    private int SnakeHeight = 40;*/
     private final int SnakeVx = 40;
     private final int SnakeVy = 40;
     private int StartX = 480;

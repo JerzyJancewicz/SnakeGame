@@ -7,115 +7,75 @@ import java.awt.event.KeyListener;
 
 public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
-    /*Image SnakeRight;
-    Image SnakeLeft;
-    Image SnakeUp;
-    Image SnakeDown;
-    Image BodyX;
-    Image BodyY;*/
-
     Snake snake = new Snake();
     Background background = new Background();
     Apple apple = new Apple();
-    PaintSnake paintSnake = new PaintSnake();
-
+    Body body = new Body();
 
     public int PanelWidth = 1920;
     public int PanelHeight = 1080;
-    //private int BodyPositionMinus = snake.getStartY() - (countApple * 40);
-    //private int BodyPositionPlus = snake.getStartY() + (countApple * 40);
+    private int countApple = 1;
+    private int countBody = 3;
     private boolean play = true;
+    int[] Xtab = new int[1175];
+    int[] Ytab = new int[1175];
 
     Timer timer = new Timer(80, this);
 
     SnakePanel() {
-        /*SnakeRight = new ImageIcon("Snake/src/Photos/head_right.png").getImage();
-        SnakeLeft = new ImageIcon("Snake/src/Photos/head_left.png").getImage();
-        SnakeUp = new ImageIcon("Snake/src/Photos/head_up.png").getImage();
-        SnakeDown = new ImageIcon("Snake/src/Photos/head_down.png").getImage();
-        BodyX = new ImageIcon("Snake/src/Photos/body_horizontal.png").getImage();
-        BodyY = new ImageIcon("Snake/src/Photos/body_vertical.png").getImage();*/
-
         this.setPreferredSize(new Dimension(PanelWidth, PanelHeight));
         this.setVisible(true);
 
         timer.start();
-
+        Xtab[0] = snake.getStartX();
+        Ytab[0] = snake.getStartY();
     }
 
     public void paint(Graphics g) {
         g.clearRect(0, 0, getWidth(), getHeight());
 
         background.paintBackGround(g);
-        paintSnake.paintSnake(g);
+        paintSnake(g);
         apple.paintApple(g);
 
     }
 
-    /*public void paint(Graphics g) {
+    public void paintSnake(Graphics g) {
 
-        switch (snake.getDirection()) {
-            case 0:
-                g.drawImage(SnakeUp, snake.getStartX(), snake.getStartY(), null);
-
-                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
-                    apple.setRandomX((int) (Math.random() * 1880));
-                    apple.setRandomY((int) (Math.random() * 1000));
-                    countBody++;
-                    countApple++;
+        for(int j = 0; j < countBody; j++) {
+            if(j == 0) {
+                switch (snake.getDirection()) {
+                    case 0:
+                        g.drawImage(body.SnakeUp, Xtab[j], Ytab[j], null);
+                        break;
+                    case 1:
+                        g.drawImage(body.SnakeDown, snake.getStartX(), snake.getStartY(), null);
+                        break;
+                    case 2:
+                        g.drawImage(body.SnakeRight, snake.getStartX(), snake.getStartY(), null);
+                        break;
+                    case 3:
+                        g.drawImage(body.SnakeLeft, snake.getStartX(), snake.getStartY(), null);
+                        break;
+                }
+            }else {
+                if(Xtab[j] == Xtab[j - 1]) {
+                    if(Ytab[j + 1] == Ytab[j] && Xtab[j + 1] == Xtab[j] + 40){ // Nie dziala tak ja ma dzialac
+                        g.drawImage(body.body_bottomRight, Xtab[j],Ytab[j],null);
+                    }else {
+                        g.drawImage(body.body_vertical, Xtab[j], Ytab[j], null);
+                    }
+                }else {
+                    if(Ytab[j + 1] == Ytab[j] && Xtab[j + 1] == Xtab[j] + 40){
+                        g.drawImage(body.body_bottomRight, Xtab[j],Ytab[j],null);
+                    }else {
+                        g.drawImage(body.body_horizontal, Xtab[j], Ytab[j], null);
+                    }
                 }
 
-                for (int i = 0; i < countBody; i++) {
-                    g.drawImage(BodyY, snake.getStartX(), snake.getStartY() + ((countBody - i) * snake.getSnakeVy()), null);
-                }
-                break;
-
-            case 1:
-                g.drawImage(SnakeDown, snake.getStartX(), snake.getStartY(), null);
-
-                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
-                    apple.setRandomX((int) (Math.random() * 1880));
-                    apple.setRandomY((int) (Math.random() * 1000));
-                    countBody++;
-                    countApple++;
-                }
-
-                for (int i = 0; i < countBody; i++) {
-                    g.drawImage(BodyY, snake.getStartX(), snake.getStartY() - ((countBody - i) * snake.getSnakeVy()), null);
-                }
-                break;
-
-            case 2:
-                g.drawImage(SnakeRight, snake.getStartX(), snake.getStartY(), null);
-
-                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
-                    apple.setRandomX((int) (Math.random() * 1880));
-                    apple.setRandomY((int) (Math.random() * 1000));
-                    countBody++;
-                    countApple++;
-                }
-
-                for (int i = 0; i < countBody; i++) {
-                    g.drawImage(BodyX, snake.getStartX() - ((countBody - i) * snake.getSnakeVx()), snake.getStartY(), null);
-                }
-                break;
-
-            case 3:
-                g.drawImage(SnakeLeft, snake.getStartX(), snake.getStartY(), null);
-
-                if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
-                    apple.setRandomX((int) (Math.random() * 1880));
-                    apple.setRandomY((int) (Math.random() * 1000));
-                    countBody++;
-                    countApple++;
-                }
-
-                for (int i = 0; i < countBody; i++) {
-                    g.drawImage(BodyX, snake.getStartX() + ((countBody - i) * snake.getSnakeVx()), snake.getStartY(), null);
-                }
-                break;
+            }
         }
-    }*/
+    }
 
     public boolean isPlaying() {
 
@@ -202,28 +162,44 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
 
-            switch (snake.getDirection()) {
-                case 0:
-                    snake.setDirection(0);
-                    snake.setStartY(snake.getStartY() - snake.getSnakeVy());
-                    break;
+        for(int i = countBody; i > 0; i--){
+            Xtab[i] = Xtab[i - 1];
+            Ytab[i] = Ytab[i - 1];
+        }
 
-                case 1:
-                    snake.setDirection(1);
-                    snake.setStartY(snake.getStartY() + snake.getSnakeVy());
-                    break;
+        switch (snake.getDirection()) {
+            case 0:
+                snake.setDirection(0);
+                snake.setStartY(snake.getStartY() - snake.getSnakeVy());
+                Ytab[0] = snake.getStartY();
+                break;
 
-                case 2:
-                    snake.setDirection(2);
-                    snake.setStartX(snake.getStartX() + snake.getSnakeVx());
-                    break;
+            case 1:
+                snake.setDirection(1);
+                snake.setStartY(snake.getStartY() + snake.getSnakeVy());
+                Ytab[0] = snake.getStartY();
+                break;
 
-                case 3:
-                    snake.setDirection(3);
-                    snake.setStartX(snake.getStartX() - snake.getSnakeVx());
-                    break;
-            }
-                isPlaying();
+            case 2:
+                snake.setDirection(2);
+                snake.setStartX(snake.getStartX() + snake.getSnakeVx());
+                Xtab[0] = snake.getStartX();
+                break;
+
+            case 3:
+                snake.setDirection(3);
+                snake.setStartX(snake.getStartX() - snake.getSnakeVx());
+                Xtab[0] = snake.getStartX();
+                break;
+        }
+
+        if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
+            apple.setRandomX((int) (Math.random() * 1880));
+            apple.setRandomY((int) (Math.random() * 1000));
+            countBody++;
+            countApple++;
+        }
+            isPlaying();
             if(!play){
                 timer.stop();
             }
