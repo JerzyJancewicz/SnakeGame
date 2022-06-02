@@ -46,7 +46,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             if(j == 0) {
                 switch (snake.getDirection()) {
                     case 0:
-                        g.drawImage(body.SnakeUp, Xtab[j], Ytab[j], null);
+                        g.drawImage(body.SnakeUp, snake.getStartX(), snake.getStartY(), null);
                         break;
                     case 1:
                         g.drawImage(body.SnakeDown, snake.getStartX(), snake.getStartY(), null);
