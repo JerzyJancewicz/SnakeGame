@@ -12,8 +12,8 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     Apple apple = new Apple();
     Body body = new Body();
 
-    public int PanelWidth = 1920;
-    public int PanelHeight = 1080;
+    public int PanelWidth = 1220;
+    public int PanelHeight = 680;
     private int countApple = 1;
     private int countBody = 3;
     private boolean play = true;
@@ -42,8 +42,8 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
     public void paintSnake(Graphics g) {
 
-        for(int j = 0; j < countBody; j++) {
-            if(j == 0) {
+        for (int j = 0; j < countBody; j++) {
+            if (j == 0) {
                 switch (snake.getDirection()) {
                     case 0:
                         g.drawImage(body.SnakeUp, snake.getStartX(), snake.getStartY(), null);
@@ -58,41 +58,40 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
                         g.drawImage(body.SnakeLeft, snake.getStartX(), snake.getStartY(), null);
                         break;
                 }
-            }else {
-                if(Xtab[j] == Xtab[j - 1]) {
-                    if(Ytab[j + 1] == Ytab[j] && Xtab[j + 1] == Xtab[j] + 40){ // Nie dziala tak ja ma dzialac
-                        g.drawImage(body.body_bottomRight, Xtab[j],Ytab[j],null);
-                    }else {
-                        g.drawImage(body.body_vertical, Xtab[j], Ytab[j], null);
-                    }
-                }else {
-                    if(Ytab[j + 1] == Ytab[j] && Xtab[j + 1] == Xtab[j] + 40){
-                        g.drawImage(body.body_bottomRight, Xtab[j],Ytab[j],null);
-                    }else {
-                        g.drawImage(body.body_horizontal, Xtab[j], Ytab[j], null);
-                    }
+            } else {
+                if (Xtab[j] == Xtab[j - 1]) {
+                    g.drawImage(body.body_vertical, Xtab[j], Ytab[j], null);
+                } else {
+                    g.drawImage(body.body_horizontal, Xtab[j], Ytab[j], null);
                 }
-
             }
         }
     }
 
     public boolean isPlaying() {
 
-        if (snake.getStartX() >= PanelWidth) {
+        if (snake.getStartX() >= PanelWidth - 40) {
             play = false;
         }
-        if (snake.getStartX() <= 0) {
+        if (snake.getStartX() <= -40) {
             play = false;
         }
-        if (snake.getStartY() >= PanelHeight) {
+        if (snake.getStartY() >= PanelHeight - 40) {
             play = false;
         }
-        if (snake.getStartY() <= 0) {
+        if (snake.getStartY() <= -40) {
             play = false;
         }
 
         return play;
+    }
+
+    public void checkCollisions(){
+        for(int i = countBody; i > 0; i--) {
+            if (Xtab[0] == Xtab[i] && Ytab[0] == Ytab[i]){
+                play = false;
+            }
+        }
     }
 
     @Override
@@ -199,10 +198,10 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             countBody++;
             countApple++;
         }
-            isPlaying();
-            if(!play){
-                timer.stop();
-            }
         repaint();
+        checkCollisions();
+        if(!isPlaying()){
+            timer.stop();
+        }
     }
 }

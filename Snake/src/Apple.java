@@ -5,8 +5,8 @@ public class Apple extends JPanel {
 
     Image Apple;
 
-    private int RandomX = (int) (Math.random() * 1880);
-    private int RandomY = (int) (Math.random() * 1000);
+    private int RandomX = (int) (41 + (Math.random() * 1180));
+    private int RandomY = (int) (41 + (Math.random() * 640) );
 
     Apple(){
         Apple = new ImageIcon("Snake/src/Photos/apple.png").getImage();
@@ -20,7 +20,7 @@ public class Apple extends JPanel {
     public int getRandomX() {
         if (RandomX % 40 != 0) {
             while (RandomX % 40 != 0) {
-                RandomX = (int) (Math.random() * 1880);
+                RandomX = (int) (Math.random() * 1180);
             }
         }
         return RandomX;
@@ -29,7 +29,7 @@ public class Apple extends JPanel {
     public int getRandomY() {
         if (RandomY % 40 != 0) {
             while (RandomY % 40 != 0) {
-                RandomY = (int) (Math.random() * 1000);
+                RandomY = (int) (Math.random() * 640);
             }
         }
         return RandomY;
