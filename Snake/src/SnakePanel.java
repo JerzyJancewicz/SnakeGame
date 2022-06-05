@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.*;
 
 public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
@@ -15,6 +16,8 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     public int PanelWidth = 1220;
     public int PanelHeight = 680;
     private int countApple = 1;
+    private int highScore;
+    private int ReadHighScore;
     private int countBody = 3;
     private boolean play = true;
     int[] Xtab = new int[1175];
@@ -29,6 +32,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         timer.start();
         Xtab[0] = snake.getStartX();
         Ytab[0] = snake.getStartY();
+        readHighScore();
     }
 
     public void paint(Graphics g) {
@@ -37,6 +41,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         background.paintBackGround(g);
         paintSnake(g);
         apple.paintApple(g);
+        drawScore(g);
 
     }
 
@@ -92,6 +97,34 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
                 play = false;
             }
         }
+    }
+
+    public void drawScore(Graphics g){
+        g.drawString("Your score : " + countApple,40,PanelHeight - 40);
+        g.drawString("High Score : " +highScore, 40,PanelHeight - 80);
+    }
+
+    public void writeHighScore(){
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("score.txt"));
+            if(countApple > highScore) {
+                countApple = highScore;
+                bufferedWriter.write(highScore);
+                bufferedWriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void readHighScore(){
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("score.txt"));
+            highScore = Integer.parseInt(bufferedReader.readLine());
+                bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -201,7 +234,12 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         repaint();
         checkCollisions();
         if(!isPlaying()){
+            writeHighScore();
             timer.stop();
+            /*while (!isPlaying()){
+                EndPanel endPanel = new EndPanel();
+                        break;
+            }*/
         }
     }
 }
