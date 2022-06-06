@@ -15,16 +15,16 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
     public int PanelWidth = 1220;
     public int PanelHeight = 680;
-    private int countApple = 1;
-    private int highScore;
-    private int ReadHighScore;
+    private int countApple = 0;
+    private String highScore = "2";
     private int countBody = 3;
     private boolean play = true;
-    int[] Xtab = new int[1175];
+    int[] Xtab = new int[1175]; // 1175 jest to maksymalna liczba narysowania sanke w 1920/1080
     int[] Ytab = new int[1175];
 
     Timer timer = new Timer(80, this);
 
+    // ustawia caly panel i uruchamia gre
     SnakePanel() {
         this.setPreferredSize(new Dimension(PanelWidth, PanelHeight));
         this.setVisible(true);
@@ -32,9 +32,9 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         timer.start();
         Xtab[0] = snake.getStartX();
         Ytab[0] = snake.getStartY();
-        readHighScore();
     }
 
+    // gromadzi wszystkie metody i je wyswietla
     public void paint(Graphics g) {
         g.clearRect(0, 0, getWidth(), getHeight());
 
@@ -42,11 +42,12 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         paintSnake(g);
         apple.paintApple(g);
         drawScore(g);
-
+        highScore = this.readHighScore();
     }
 
+    // wyswietla snakea z koordynatow X i Y z Xtab i Ytab
+    // Xtab[0] to jest glowa, reszta to jest cialo
     public void paintSnake(Graphics g) {
-
         for (int j = 0; j < countBody; j++) {
             if (j == 0) {
                 switch (snake.getDirection()) {
@@ -73,6 +74,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         }
     }
 
+    // sprawdza, czy snake nie wyjedzie za plansze i jesli tak to play = false
     public boolean isPlaying() {
 
         if (snake.getStartX() >= PanelWidth - 40) {
@@ -91,6 +93,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         return play;
     }
 
+    // sprawdza, czy snake uderzyl w samego siebie
     public void checkCollisions(){
         for(int i = countBody; i > 0; i--) {
             if (Xtab[0] == Xtab[i] && Ytab[0] == Ytab[i]){
@@ -99,34 +102,60 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         }
     }
 
+    // wyswietla wynik w prawym gornym rogu
     public void drawScore(Graphics g){
-        g.drawString("Your score : " + countApple,40,PanelHeight - 40);
-        g.drawString("High Score : " +highScore, 40,PanelHeight - 80);
+        g.setColor(new Color(0,0,0));
+        g.drawString("Your score : " + countApple,PanelWidth - 140,  40);
+        g.drawString("High Score : " + highScore, PanelWidth - 140, 65);
     }
 
+    // zapisuje do pliku wynik, o ile jest najlepszy
     public void writeHighScore(){
+        BufferedWriter bufferedWriter = null;
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("score.txt"));
-            if(countApple > highScore) {
-                countApple = highScore;
+            bufferedWriter = new BufferedWriter(new FileWriter("score.txt"));
                 bufferedWriter.write(highScore);
                 bufferedWriter.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally {
+            try {
+                if(bufferedWriter != null) {
+                    bufferedWriter.close();
+                }
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
-    public void readHighScore(){
+    // odczytuje z pliku najlepszy wynik
+    public String readHighScore(){
+        BufferedReader bufferedReader = null;
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("score.txt"));
-            highScore = Integer.parseInt(bufferedReader.readLine());
-                bufferedReader.close();
+            bufferedReader = new BufferedReader(new FileReader("score.txt"));
+            return bufferedReader.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+           return "";
         }
-
+        finally {
+            try {
+                if(bufferedReader != null)
+                bufferedReader.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
+    // sprawdza, czy uzyskany wynik jest najlepszy
+    public void checkScore(){
+        if(countApple > Integer.parseInt(highScore)){
+           highScore = " " + countApple;
+        }
+    }
+
+    // po nacisnieciu przycikow w,s,d,a, zmienia kierunek snake
+    // i nie pozwala mu isc w druga strone po tej samej linii
     @Override
     public void keyTyped(KeyEvent e) {
         switch (e.getKeyChar()) {
@@ -164,6 +193,8 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         }
     }
 
+    // dziala na podobnej zasadzie tylko zamiast w,s,d,a sa strzalki
+    // dodatkowa opcja gry
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -190,7 +221,9 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     public void keyReleased(KeyEvent e) {
     }
 
-
+    // pozwala na przemieszczanie sie snake (po tablicy) i przemieszcanie sie ciala
+    // sprawdza czy czy gracz zebral jablko
+    // sprawdza czy mozna grac
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -233,8 +266,9 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         }
         repaint();
         checkCollisions();
+        writeHighScore();
         if(!isPlaying()){
-            writeHighScore();
+            checkScore();
             timer.stop();
             /*while (!isPlaying()){
                 EndPanel endPanel = new EndPanel();
