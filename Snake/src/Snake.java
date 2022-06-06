@@ -1,4 +1,3 @@
-
 public class Snake {
 
     // klasa przechowuje infrmacje o snake

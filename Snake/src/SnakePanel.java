@@ -89,7 +89,6 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         if (snake.getStartY() <= -40) {
             play = false;
         }
-
         return play;
     }
 
@@ -112,27 +111,35 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     // zapisuje do pliku wynik, o ile jest najlepszy
     public void writeHighScore(){
         BufferedWriter bufferedWriter = null;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter("score.txt"));
-                bufferedWriter.write(highScore);
-                bufferedWriter.close();
-            } catch (IOException e){
+        File file = new File("highestScore.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+            try {
+                bufferedWriter = new BufferedWriter(new FileWriter("highestScore.txt"));
+                bufferedWriter.write(this.highScore);
+            } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-            try {
-                if(bufferedWriter != null) {
-                    bufferedWriter.close();
-                }
-                } catch (IOException e){
+                try {
+                    if (bufferedWriter != null) {
+                        bufferedWriter.close();
+                    }
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
     }
+
     // odczytuje z pliku najlepszy wynik
     public String readHighScore(){
         BufferedReader bufferedReader = null;
         try {
-            bufferedReader = new BufferedReader(new FileReader("score.txt"));
+            bufferedReader = new BufferedReader(new FileReader("highestScore.txt"));
             return bufferedReader.readLine();
         } catch (IOException e) {
            return "";
@@ -150,7 +157,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     // sprawdza, czy uzyskany wynik jest najlepszy
     public void checkScore(){
         if(countApple > Integer.parseInt(highScore)){
-           highScore = " " + countApple;
+           highScore = Integer.toString(countApple);
         }
     }
 
@@ -163,31 +170,24 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
                 if(snake.getDirection() != 1){
                     snake.setDirection(0);
                 }
-                //System.out.println(snake.getDirection());
-                //System.out.println("w");
                 break;
             }
             case 's': {
                 if(snake.getDirection() != 0) {
                     snake.setDirection(1);
                 }
-                //System.out.println(snake.getDirection());
-                //System.out.println("s");
                 break;
             }
             case 'd': {
-                if(snake.getDirection() != 3)
-                snake.setDirection(2);
-                //System.out.println(snake.getDirection());
-                //System.out.println("d");
+                if(snake.getDirection() != 3) {
+                    snake.setDirection(2);
+                }
                 break;
             }
             case 'a': {
                 if(snake.getDirection() != 2) {
                     snake.setDirection(3);
                 }
-                //System.out.println(snake.getDirection());
-                //System.out.println("a");
                 break;
             }
         }
@@ -199,20 +199,31 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case 38: {
-                snake.setDirection(0);
-                break;
+                if(snake.getDirection() != 1) {
+                    snake.setDirection(0);
+                }
+                    break;
+
             }
             case 40: {
-                snake.setDirection(1);
-                break;
+                if(snake.getDirection() != 0) {
+                    snake.setDirection(1);
+                }
+                    break;
+
             }
             case 39: {
-                snake.setDirection(2);
-                break;
+                if(snake.getDirection() != 3) {
+                    snake.setDirection(2);
+                }
+                    break;
+
             }
             case 37: {
-                snake.setDirection(3);
-                break;
+                if(snake.getDirection() != 2) {
+                    snake.setDirection(3);
+                }
+                    break;
             }
         }
     }
@@ -259,21 +270,17 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         }
 
         if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
-            apple.setRandomX((int) (Math.random() * 1880));
-            apple.setRandomY((int) (Math.random() * 1000));
+            apple.setRandomX((int) (Math.random() * 1180));
+            apple.setRandomY((int) (Math.random() * 640));
             countBody++;
             countApple++;
         }
         repaint();
         checkCollisions();
-        writeHighScore();
         if(!isPlaying()){
             checkScore();
+            writeHighScore();
             timer.stop();
-            /*while (!isPlaying()){
-                EndPanel endPanel = new EndPanel();
-                        break;
-            }*/
         }
     }
 }
