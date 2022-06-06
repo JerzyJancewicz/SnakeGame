@@ -2,7 +2,7 @@
 public class Main {
     public static void main(String[] args){
 
-       StartPanel startPanel = new StartPanel();
+        Window window = new Window();
 
     }
 }

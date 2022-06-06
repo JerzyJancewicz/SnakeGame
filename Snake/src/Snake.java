@@ -1,8 +1,10 @@
 
 public class Snake {
 
-    private final int SnakeVx = 40;
-    private final int SnakeVy = 40;
+    // klasa przechowuje infrmacje o snake
+
+    private final int SnakeVx = 40; // predkosc po X
+    private final int SnakeVy = 40; // predkosc po Y
     private int StartX = 480;
     private int StartY = 480;
     private int Direction;

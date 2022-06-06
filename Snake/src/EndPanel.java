@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +11,9 @@ public class EndPanel extends JFrame implements ActionListener {
     JButton statisticButton = new JButton("Chek the best score");
     JButton restartButton = new JButton("Restart Game");
 
+    // ustawia panel koncowy i funkcjonalne guziki
     EndPanel(){
+        this.setBackground(new Color(68, 66, 66));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(snakePanel.PanelWidth,snakePanel.PanelHeight);
         this.setVisible(true);
@@ -32,6 +35,8 @@ public class EndPanel extends JFrame implements ActionListener {
         restartButton.setFocusable(false);
     }
 
+
+    // sprawia, ze guziki sa funkcjonalne
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == exitButton){
