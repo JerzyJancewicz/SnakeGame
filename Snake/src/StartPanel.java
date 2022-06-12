@@ -12,45 +12,53 @@ import java.awt.event.ActionListener;
         JButton statisticButton = new JButton("Chek the best score");
         JButton exitButton = new JButton("Exit Game");
 
-        //Ustawia Panel poczatkowy i dodaje do niego funkcjonalne guziki
+        ImageIcon snakeStart;
 
         JPanel panel = new JPanel();
+        JLabel jLabel = new JLabel();
+
+        //Ustawia Panel poczatkowy i dodaje do niego funkcjonalne guziki
 
         StartPanel(){
-            this.setSize(snakePanel.PanelWidth,snakePanel.PanelHeight);
+            snakeStart = new ImageIcon("Snake/src/Photos/images.png");
+
+            this.setSize(snakePanel.PanelWidth, snakePanel.PanelHeight);
             this.setDefaultCloseOperation(EXIT_ON_CLOSE);
             this.setVisible(true);
-            this.setLayout(null);
             this.setLocationRelativeTo(null);
+            this.setResizable(false);
+            this.setTitle("Snake");
 
-            panel.setSize(new Dimension(snakePanel.PanelWidth,snakePanel.PanelHeight));
+            jLabel.setIcon(snakeStart);
+            jLabel.setBounds(snakePanel.PanelWidth/2 - 215, 70,400,130);
+
+            panel.setSize(new Dimension(snakePanel.PanelWidth, snakePanel.PanelHeight));
             panel.setBackground(new Color(30, 29, 29));
-            //panel.setLayout();
+            panel.setLayout(null);
+            panel.add(jLabel);
 
-            startButton.setBounds(600,240,200,100);
+            startButton.setBounds(snakePanel.PanelWidth/2 - 125,250,200,100);
             startButton.addActionListener(this);
             startButton.setBackground(new Color(1,1,1));
             startButton.setForeground(new Color(255, 255, 255));
             panel.add(startButton);
 
-            statisticButton.setBounds(600,340,200,100);
+            statisticButton.setBounds(snakePanel.PanelWidth/2 - 125,360,200,100);
             statisticButton.addActionListener(this);
             statisticButton.setBackground(new Color(1,1,1));
             statisticButton.setForeground(new Color(255, 255, 255));
             panel.add(statisticButton);
 
-            exitButton.setBounds(600,440,200,100);
+            exitButton.setBounds(snakePanel.PanelWidth/2 - 125,470,200,100);
             exitButton.addActionListener(this);
             exitButton.setBackground(new Color(1,1,1));
             exitButton.setForeground(new Color(255, 255, 255));
             panel.add(exitButton);
 
             this.add(panel);
-        /*statisticButton.setFocusable(false);
-        startButton.setFocusable(false);*/
+
         }
 
-        // jesli nacisniemy na guzik, otworzy sie okno z gra
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == startButton){
@@ -58,7 +66,8 @@ import java.awt.event.ActionListener;
                 new Window();
             }
             if(e.getSource() == statisticButton){
-
+                dispose();
+                new ScorePanel();
             }
             if(e.getSource() == exitButton){
                 System.exit(0);

@@ -16,7 +16,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     public int PanelWidth = 1220;
     public int PanelHeight = 680;
     private int countApple = 0;
-    private String highScore = "2";
+    private String highScore;
     private int countBody = 3;
     private boolean play = true;
     int[] Xtab = new int[1175]; // 1175 jest to maksymalna liczba narysowania sanke w 1920/1080
@@ -42,7 +42,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         paintSnake(g);
         apple.paintApple(g);
         drawScore(g);
-        highScore = this.readHighScore();
+//        highScore = this.readHighScore();
     }
 
     // wyswietla snakea z koordynatow X i Y z Xtab i Ytab
@@ -275,6 +275,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             countBody++;
             countApple++;
         }
+        highScore = this.readHighScore();
         repaint();
         checkCollisions();
         if(!isPlaying()){

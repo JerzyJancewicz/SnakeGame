@@ -12,7 +12,6 @@ public class Window extends JFrame{
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.add(snakePanel);
