@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class ScorePanel extends JFrame implements ActionListener {
 
     SnakePanel snakePanel = new SnakePanel();
+    Body body = new Body();
 
     JButton exitToMenuButton = new JButton("Main Menu");
 
@@ -20,10 +21,11 @@ public class ScorePanel extends JFrame implements ActionListener {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setTitle("Snake")
+        this.setTitle("Snake");
+        this.setIconImage(body.SnakeUp);
 
-        jLabel.setBounds(snakePanel.PanelWidth/2 - 125,125,100,100);
-        jLabel.setFont(new Font("Serify",Font.PLAIN,70));
+        jLabel.setBounds(snakePanel.PanelWidth/2 - 65,125,100,100);
+        jLabel.setFont(new Font("Word",Font.PLAIN,70));
         jLabel.setBackground(new Color(0,0,0));
         jLabel.setForeground(new Color(122, 173, 65, 255));
         jLabel.setText(snakePanel.readHighScore());
@@ -33,7 +35,7 @@ public class ScorePanel extends JFrame implements ActionListener {
         panel.setBackground(new Color(30, 29, 29));
         panel.setLayout(null);
 
-        exitToMenuButton.setBounds(snakePanel.PanelWidth/2 - 125,470,200,100);
+        exitToMenuButton.setBounds(snakePanel.PanelWidth/2 - 125,340,200,100);
         exitToMenuButton.addActionListener(this);
         exitToMenuButton.setBackground(new Color(1,1,1));
         exitToMenuButton.setForeground(new Color(255, 255, 255));

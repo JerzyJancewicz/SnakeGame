@@ -19,10 +19,11 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     private String highScore;
     private int countBody = 3;
     private boolean play = true;
+    private final int delay = 80;
     int[] Xtab = new int[1175]; // 1175 jest to maksymalna liczba narysowania sanke w 1920/1080
     int[] Ytab = new int[1175];
 
-    Timer timer = new Timer(80, this);
+    Timer timer = new Timer(delay, this);
 
     // ustawia caly panel i uruchamia gre
     SnakePanel() {
@@ -270,11 +271,21 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         }
 
         if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
-            apple.setRandomX((int) (Math.random() * 1180));
-            apple.setRandomY((int) (Math.random() * 640));
-            countBody++;
-            countApple++;
+            if(apple.getRandomNumber() > 0.1) {
+                apple.setRandomX((int) (Math.random() * PanelWidth - 40));
+                apple.setRandomY((int) (Math.random() * PanelHeight - 40));
+                apple.setRandomNumber(Math.random());
+                countBody++;
+                countApple++;
+            }else{
+                apple.setRandomX((int) (Math.random() * PanelWidth - 40));
+                apple.setRandomY((int) (Math.random() * PanelHeight - 40));
+                apple.setRandomNumber(Math.random());
+                countBody++;
+                countApple += 3;
+            }
         }
+
         highScore = this.readHighScore();
         repaint();
         checkCollisions();
@@ -282,6 +293,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             checkScore();
             writeHighScore();
             timer.stop();
+            //System.exit(0);
         }
     }
 }

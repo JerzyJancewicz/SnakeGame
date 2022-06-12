@@ -22,7 +22,6 @@ public class EndPanel extends JFrame implements ActionListener {
         this.add(exitButton);
         this.add(restartButton);
 
-
         exitButton.setBounds(600,240,200,100);
         exitButton.addActionListener(this);
         statisticButton.setBounds(600,340,200,100);

@@ -1,6 +1,4 @@
-
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,8 +6,9 @@ import java.awt.event.ActionListener;
     public class StartPanel extends JFrame implements ActionListener {
 
         SnakePanel snakePanel = new SnakePanel();
+        Body body = new Body();
         JButton startButton = new JButton("Start Game");
-        JButton statisticButton = new JButton("Chek the best score");
+        JButton statisticButton = new JButton("Check the best score");
         JButton exitButton = new JButton("Exit Game");
 
         ImageIcon snakeStart;
@@ -28,6 +27,7 @@ import java.awt.event.ActionListener;
             this.setLocationRelativeTo(null);
             this.setResizable(false);
             this.setTitle("Snake");
+            this.setIconImage(body.SnakeUp);
 
             jLabel.setIcon(snakeStart);
             jLabel.setBounds(snakePanel.PanelWidth/2 - 215, 70,400,130);
@@ -56,7 +56,6 @@ import java.awt.event.ActionListener;
             panel.add(exitButton);
 
             this.add(panel);
-
         }
 
         @Override

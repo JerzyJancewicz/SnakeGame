@@ -4,18 +4,24 @@ import java.awt.*;
 public class Apple extends JPanel {
 
     Image Apple;
+    Image GoldenApple;
 
     private int RandomX = (int) (Math.random() * 1180);
     private int RandomY = (int) (Math.random() * 640);
+    private double RandomNumber = (Math.random());
 
     Apple(){
+        GoldenApple = new ImageIcon("Snake/src/Photos/applegold.png").getImage();
         Apple = new ImageIcon("Snake/src/Photos/apple.png").getImage();
     }
 
     // rysuje jablko
     public void paintApple(Graphics g) {
-        g.drawImage(Apple, getRandomX(), getRandomY(), null);
-
+        if(RandomNumber < 0.1){
+            g.drawImage(GoldenApple, getRandomX(), getRandomY(), null);
+        }else {
+            g.drawImage(Apple, getRandomX(), getRandomY(), null);
+        }
     }
 
     //daje randomowy X taki, zeby byl podzielny przez 40,
@@ -40,6 +46,10 @@ public class Apple extends JPanel {
         return RandomY;
     }
 
+    public void setRandomNumber(double randomNumber) {
+        RandomNumber = randomNumber;
+    }
+
     public void setRandomX(int randomX) {
         RandomX = randomX;
     }
@@ -48,4 +58,7 @@ public class Apple extends JPanel {
         RandomY = randomY;
     }
 
+    public double getRandomNumber() {
+        return RandomNumber;
+    }
 }
