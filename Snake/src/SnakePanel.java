@@ -16,12 +16,13 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
     public int PanelWidth = 1220;
     public int PanelHeight = 680;
     private int countApple = 0;
+    private int countGoldenApple = 0;
     private String highScore;
     private int countBody = 3;
     private boolean play = true;
     private final int delay = 80;
-    int[] Xtab = new int[1175]; // 1175 jest to maksymalna liczba narysowania sanke w 1920/1080
-    int[] Ytab = new int[1175];
+    int[] Xtab = new int[(PanelWidth / 40) * (PanelHeight / 40)]; //  jest to maksymalna liczba narysowania snake
+    int[] Ytab = new int[(PanelWidth / 40) * (PanelHeight / 40)];
 
     Timer timer = new Timer(delay, this);
 
@@ -99,6 +100,14 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             if (Xtab[0] == Xtab[i] && Ytab[0] == Ytab[i]){
                 play = false;
             }
+            if((Xtab[i] == apple.getRandomX() && Ytab[i] == apple.getRandomY())){
+                apple.setRandomX((int) (Math.random() * PanelWidth - 40));
+                apple.setRandomY((int) (Math.random() * PanelHeight - 40));
+            }
+            if((Xtab[i] == apple.getRandomX2() && Ytab[i] == apple.getRandomY2())) {
+                apple.setRandomX2((int) (Math.random() * PanelWidth - 40));
+                apple.setRandomY2((int) (Math.random() * PanelWidth - 40));
+            }
         }
     }
 
@@ -107,6 +116,14 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         g.setColor(new Color(0,0,0));
         g.drawString("Your score : " + countApple,PanelWidth - 140,  40);
         g.drawString("High Score : " + highScore, PanelWidth - 140, 65);
+        g.drawString("Golden Apples : " + countGoldenApple, PanelWidth - 140, 90);
+    }
+
+    // sprawdza, czy uzyskany wynik jest najlepszy
+    public void checkScore(){
+        if(countApple > Integer.parseInt(highScore)){
+            highScore = Integer.toString(countApple);
+        }
     }
 
     // zapisuje do pliku wynik, o ile jest najlepszy
@@ -152,13 +169,6 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             } catch (IOException e){
                 e.printStackTrace();
             }
-        }
-    }
-
-    // sprawdza, czy uzyskany wynik jest najlepszy
-    public void checkScore(){
-        if(countApple > Integer.parseInt(highScore)){
-           highScore = Integer.toString(countApple);
         }
     }
 
@@ -270,30 +280,35 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
                 break;
         }
 
-        if(apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()){
+        if((apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()) || (apple.getRandomX2() == snake.getStartX() && apple.getRandomY2() == snake.getStartY())){
             if(apple.getRandomNumber() > 0.1) {
                 apple.setRandomX((int) (Math.random() * PanelWidth - 40));
                 apple.setRandomY((int) (Math.random() * PanelHeight - 40));
+                apple.setRandomX2((int) (Math.random() * PanelWidth - 40));
+                apple.setRandomY2((int) (Math.random() * PanelWidth - 40));
                 apple.setRandomNumber(Math.random());
                 countBody++;
                 countApple++;
             }else{
                 apple.setRandomX((int) (Math.random() * PanelWidth - 40));
                 apple.setRandomY((int) (Math.random() * PanelHeight - 40));
+                apple.setRandomX2((int) (Math.random() * PanelWidth - 40));
+                apple.setRandomY2((int) (Math.random() * PanelWidth - 40));
                 apple.setRandomNumber(Math.random());
                 countBody++;
                 countApple += 3;
+                countGoldenApple++;
             }
         }
 
         highScore = this.readHighScore();
         repaint();
         checkCollisions();
+
         if(!isPlaying()){
             checkScore();
             writeHighScore();
             timer.stop();
-            //System.exit(0);
         }
     }
 }

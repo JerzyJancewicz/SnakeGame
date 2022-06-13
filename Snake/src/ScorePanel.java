@@ -24,11 +24,11 @@ public class ScorePanel extends JFrame implements ActionListener {
         this.setTitle("Snake");
         this.setIconImage(body.SnakeUp);
 
-        jLabel.setBounds(snakePanel.PanelWidth/2 - 65,125,100,100);
-        jLabel.setFont(new Font("Word",Font.PLAIN,70));
+        jLabel.setBounds(snakePanel.PanelWidth/2 - 200,125,snakePanel.PanelWidth,100);
+        jLabel.setFont(new Font("Word",Font.PLAIN,40));
         jLabel.setBackground(new Color(0,0,0));
         jLabel.setForeground(new Color(122, 173, 65, 255));
-        jLabel.setText(snakePanel.readHighScore());
+        jLabel.setText("The best Score : " + snakePanel.readHighScore());
 
         panel.add(jLabel);
         panel.setSize(new Dimension(snakePanel.PanelWidth, snakePanel.PanelHeight));

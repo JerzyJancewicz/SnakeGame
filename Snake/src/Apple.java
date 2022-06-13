@@ -8,6 +8,8 @@ public class Apple extends JPanel {
 
     private int RandomX = (int) (Math.random() * 1180);
     private int RandomY = (int) (Math.random() * 640);
+    private int RandomX2 = (int) (Math.random() * 1180);
+    private int RandomY2 = (int) (Math.random() * 640);
     private double RandomNumber = (Math.random());
 
     Apple(){
@@ -17,8 +19,9 @@ public class Apple extends JPanel {
 
     // rysuje jablko
     public void paintApple(Graphics g) {
-        if(RandomNumber < 0.1){
-            g.drawImage(GoldenApple, getRandomX(), getRandomY(), null);
+        if(RandomNumber < 0.1 && getRandomX() != getRandomX2() && getRandomY() != getRandomY2()){
+            g.drawImage(GoldenApple, getRandomX2(), getRandomY2(), null);
+            g.drawImage(Apple, getRandomX(), getRandomY(), null);
         }else {
             g.drawImage(Apple, getRandomX(), getRandomY(), null);
         }
@@ -46,6 +49,24 @@ public class Apple extends JPanel {
         return RandomY;
     }
 
+    public int getRandomX2() {
+        if (RandomX2 % 40 != 0) {
+            while (RandomX2 % 40 != 0) {
+                RandomX2 = (int) (Math.random() * 640);
+            }
+        }
+        return RandomX2;
+    }
+
+    public int getRandomY2() {
+        if (RandomY2 % 40 != 0) {
+            while (RandomY2 % 40 != 0) {
+                RandomY2 = (int) (Math.random() * 640);
+            }
+        }
+        return RandomY2;
+    }
+
     public void setRandomNumber(double randomNumber) {
         RandomNumber = randomNumber;
     }
@@ -56,6 +77,14 @@ public class Apple extends JPanel {
 
     public void setRandomY(int randomY) {
         RandomY = randomY;
+    }
+
+    public void setRandomX2(int randomX2) {
+        RandomX2 = randomX2;
+    }
+
+    public void setRandomY2(int randomY2) {
+        RandomY2 = randomY2;
     }
 
     public double getRandomNumber() {
