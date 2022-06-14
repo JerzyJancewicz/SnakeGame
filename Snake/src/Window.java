@@ -1,11 +1,13 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Window extends JFrame{
+public class Window extends JFrame implements ActionListener {
 
     SnakePanel snakePanel = new SnakePanel();
 
     Body body = new Body();
-
+    Timer timer;
     // dodaje KeyListener do Windowa i calego snakepanela
     Window(){
         this.setSize(snakePanel.PanelWidth,snakePanel.PanelHeight);
@@ -19,6 +21,17 @@ public class Window extends JFrame{
 
         this.add(snakePanel);
         this.addKeyListener(snakePanel);
+        timer = new Timer(80,this);
+        timer.start();
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(!snakePanel.isPlaying()){
+            timer.stop();
+            dispose();
+            new EndPanel();
+        }
     }
 }

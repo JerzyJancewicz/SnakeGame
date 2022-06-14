@@ -15,7 +15,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
 
     public int PanelWidth = 1220;
     public int PanelHeight = 680;
-    private int countApple = 0;
+    public int countApple = 0;
     private int countGoldenApple = 0;
     private String highScore;
     private int countBody = 3;
@@ -103,10 +103,6 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
             if((Xtab[i] == apple.getRandomX() && Ytab[i] == apple.getRandomY())){
                 apple.setRandomX((int) (Math.random() * PanelWidth - 40));
                 apple.setRandomY((int) (Math.random() * PanelHeight - 40));
-            }
-            if((Xtab[i] == apple.getRandomX2() && Ytab[i] == apple.getRandomY2())) {
-                apple.setRandomX2((int) (Math.random() * PanelWidth - 40));
-                apple.setRandomY2((int) (Math.random() * PanelWidth - 40));
             }
         }
     }
@@ -280,25 +276,21 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
                 break;
         }
 
-        if((apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()) || (apple.getRandomX2() == snake.getStartX() && apple.getRandomY2() == snake.getStartY())){
-            if(apple.getRandomNumber() > 0.1) {
+        if((apple.getRandomX() == snake.getStartX() && apple.getRandomY() == snake.getStartY()) && apple.getRandomNumber() > 0.1){
                 apple.setRandomX((int) (Math.random() * PanelWidth - 40));
                 apple.setRandomY((int) (Math.random() * PanelHeight - 40));
-                apple.setRandomX2((int) (Math.random() * PanelWidth - 40));
-                apple.setRandomY2((int) (Math.random() * PanelWidth - 40));
                 apple.setRandomNumber(Math.random());
                 countBody++;
                 countApple++;
-            }else{
-                apple.setRandomX((int) (Math.random() * PanelWidth - 40));
-                apple.setRandomY((int) (Math.random() * PanelHeight - 40));
-                apple.setRandomX2((int) (Math.random() * PanelWidth - 40));
-                apple.setRandomY2((int) (Math.random() * PanelWidth - 40));
-                apple.setRandomNumber(Math.random());
-                countBody++;
-                countApple += 3;
-                countGoldenApple++;
-            }
+
+        }
+        if((apple.getRandomX2() == snake.getStartX() && apple.getRandomY2() == snake.getStartY()) && apple.getRandomNumber() < 0.1){
+            apple.setRandomX((int) (Math.random() * PanelWidth - 40));
+            apple.setRandomY((int) (Math.random() * PanelHeight - 40));
+            apple.setRandomNumber(Math.random());
+            countBody++;
+            countApple +=3;
+            countGoldenApple++;
         }
 
         highScore = this.readHighScore();
@@ -306,9 +298,9 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener{
         checkCollisions();
 
         if(!isPlaying()){
+            timer.stop();
             checkScore();
             writeHighScore();
-            timer.stop();
         }
     }
 }

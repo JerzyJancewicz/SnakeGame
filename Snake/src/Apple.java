@@ -52,7 +52,7 @@ public class Apple extends JPanel {
     public int getRandomX2() {
         if (RandomX2 % 40 != 0) {
             while (RandomX2 % 40 != 0) {
-                RandomX2 = (int) (Math.random() * 640);
+                RandomX2 = (int) (Math.random() * 1180);
             }
         }
         return RandomX2;
@@ -69,6 +69,8 @@ public class Apple extends JPanel {
 
     public void setRandomNumber(double randomNumber) {
         RandomNumber = randomNumber;
+        setRandomX2((int) (Math.random() * 1180));
+        setRandomY2((int) (Math.random() * 640));
     }
 
     public void setRandomX(int randomX) {

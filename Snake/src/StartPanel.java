@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
         //Ustawia Panel poczatkowy i dodaje do niego funkcjonalne guziki
 
         StartPanel(){
+
             snakeStart = new ImageIcon("Snake/src/Photos/images.png");
 
             this.setSize(snakePanel.PanelWidth, snakePanel.PanelHeight);
